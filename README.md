@@ -114,8 +114,8 @@ macOS support has not yet been tested on a real Mac. Please open an issue if som
 
 ## Manual Installation
 ```bash
-git clone https://github.com/typotive/pixelcat.git
-cd pixelcat
+git clone https://github.com/typotive/pixelpet.git
+cd pixelpet
 pip install -r requirements.txt
 python desktop_cat.py
 ```

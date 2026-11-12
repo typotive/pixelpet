@@ -132,6 +132,7 @@ Tested only by simulation on Windows (`os.sep = "/"` before import, patched `sys
 Newest first. **Every change to the app gets a line here, and the sections above are kept current.**
 
 **2026-11-12**
+- The repo is now typotive/pixelpet (README title "Desktop Pet"); README clone link updated.
 - Productivity add-ons: focus timer, quick notes and one-off reminders, 20-20-20 eye break (a new default routine that joins existing lists once), calculator and unit conversion in Fetch, pinned and recent items, Open with…, clipboard history (memory only), global hotkeys with fallbacks, screenshot helper, daily stats with a summary and a weekly chart, quiet mode for full-screen apps.
 - Pet add-ons: mood, treats, ball game, seasonal hats, perching on the active window, eleven colours, a second pet.
 - Light glass theme (glass windows and Settings), optional generated per-pet sounds, choice bubble buttons wrap into rows, Settings gains More and Stats tabs.
