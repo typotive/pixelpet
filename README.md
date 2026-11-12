@@ -5,7 +5,7 @@ A lightweight pixel companion that sits atop your taskbar or Dock to encourage h
 Single Python file · PyQt6 · no build step · 100% local processing.
 
 <p align="center">
-  <img src="docs/screenshots/choice.png" width="380" alt="Double-click the cat: Fetch a file or Cobra mode">
+  <img src="docs/screenshots/choice.png" width="380" alt="Double-click the pet: choose what it does">
   <img src="docs/screenshots/fetch.png" width="420" alt="Instant file and app search">
 </p>
 
@@ -30,10 +30,10 @@ These are only the starting set. In **Settings → Routines** you can change the
 </p>
 
 ### 🔎 Fast Local File & App Launcher
-Double-click the cat → **Fetch a file**, and begin typing. The utility maintains an in-memory index of file names across your local fixed drives (indexing millions of entries in seconds and returning results in under 80 ms), persisted locally and updated as files change.
+Double-click the pet → **Fetch a file**, and begin typing. The utility maintains an in-memory index of file names across your local fixed drives (indexing millions of entries in seconds and returning results in under 80 ms), persisted locally and updated as files change.
 
 - **Apps:** Indexed system applications and installed package entries display prioritized at the top. Click to launch.
-- **Files:** Press `Enter` or click to animate the cat retrieving the item and opening its parent folder with the target pre-selected.
+- **Files:** Press `Enter` or click to animate the pet retrieving the item and opening its parent folder with the target pre-selected.
 - **Search syntax:** `words` (AND logic) · `!exclude` · `"exact phrase"` · `ext:pdf;docx` · `file:` · `folder:` · `app:` · `*wild?cards` · `docs\report` (path matching)
 - **Keyboard shortcuts:** `Enter` launch/locate · `Shift+Enter` copy path · `Ctrl+Enter` open directly · `↑ / ↓` navigate · `Esc` dismiss · drag results directly into external apps
 - **Answers:** type a sum (`12*7`, `15% of 80`, `sqrt(2)`) or a conversion (`5 km in miles`, `100 f to c`, `1 gb in mib`) and the answer appears on top. `Enter` copies it.
@@ -52,7 +52,7 @@ Double-click the cat → **Fetch a file**, and begin typing. The utility maintai
 Double-click → **Cobra mode**. Inspect storage usage before performing any action (viewing Recycle Bin usage and old cache files); **no items are removed without explicit confirmation**. During cleanup, an interactive pixel battle animation plays until completion.
 
 <p align="center">
-  <img src="docs/screenshots/cobra_fight.png" width="330" alt="The cat animation">
+  <img src="docs/screenshots/cobra_fight.png" width="330" alt="The pet fighting the cobra">
   <img src="docs/screenshots/cobra_ko.png" width="360" alt="Completed animation">
 </p>
 
@@ -88,10 +88,10 @@ Download or clone this repository (unzip it first if needed), open the [`install
 
 | System | File |
 |---|---|
-| Windows | `Install Desktop Cat (Windows).bat` |
-| Mac | `Install Desktop Cat (Mac).command` |
+| Windows | `Install Desktop Pet (Windows).bat` |
+| Mac | `Install Desktop Pet (Mac).command` |
 
-The installer sets up Python if needed, installs the required packages in a private environment, creates a **Desktop Cat** icon on your Desktop, and starts the companion. It is safe to run again. See [`install/README.txt`](install/README.txt) for security prompts and uninstall steps.
+The installer sets up Python if needed, installs the required packages in a private environment, creates a **Desktop Pet** icon on your Desktop, and starts the companion. It is safe to run again. See [`install/README.txt`](install/README.txt) for security prompts and uninstall steps.
 
 ## Platform Support
 | Feature | Windows 10 / 11 | macOS |

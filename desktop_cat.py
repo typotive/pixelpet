@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-desktop_cat.py - a tiny pixel cat that wanders your screen, reminds you to take breaks,
+desktop_cat.py - Desktop Pet: a tiny pixel pet that wanders your screen, reminds you to take breaks,
 fetches files for you and clears out junk in Cobra mode.
 
 What it does
@@ -33,7 +33,7 @@ Running it
     python desktop_cat.py --demo # fast timers: alert after 30 s, idle after 20 s
     python desktop_cat.py --install-shortcut   # Desktop + Start menu shortcuts with a cat icon
 
-To pin to the taskbar, right-click the "Desktop Cat" shortcut > Pin to taskbar (Windows
+To pin to the taskbar, right-click the "Desktop Pet" shortcut > Pin to taskbar (Windows
 does not allow apps to pin themselves). Launching it again while it runs makes the
 existing cat say hello instead of starting a second cat.
 
@@ -4238,7 +4238,7 @@ class DesktopPet(QtCore.QObject):
         if not QtWidgets.QSystemTrayIcon.isSystemTrayAvailable():
             return None
         tray = QtWidgets.QSystemTrayIcon(QtGui.QIcon(self.sprites.frames["stand"][1]), self)
-        tray.setToolTip("Desktop Cat")
+        tray.setToolTip("Desktop Pet")
         tray.setContextMenu(self.menu)
         tray.show()
         return tray
@@ -5152,7 +5152,7 @@ class DesktopPet(QtCore.QObject):
             soonest = f"{routine['title']} in {fmt_duration(max(0.0, left))}  ·  "
         self._status_action.setText(f"Session: {state}  ·  {soonest}{fmt_count(self.index.count())} files indexed")
         if self.tray:
-            self.tray.setToolTip(f"Desktop Cat - {state}")
+            self.tray.setToolTip(f"Desktop Pet - {state}")
 
         now_m = time.monotonic()
         dt = min(5.0, now_m - self._last_tick)  # a long gap is sleep, not screen time
@@ -5487,7 +5487,7 @@ class SettingsWindow(QtWidgets.QDialog):
     def __init__(self, pet: "DesktopPet") -> None:
         super().__init__(None)
         self.pet = pet
-        self.setWindowTitle("Desktop Cat settings")
+        self.setWindowTitle("Desktop Pet settings")
         self.setStyleSheet(settings_qss())
         self.setFont(pet.ui_font.make(10))
         self.setMinimumWidth(520)
@@ -5847,7 +5847,7 @@ class SettingsWindow(QtWidgets.QDialog):
 
     def _confirm(self, question: str) -> bool:
         box = QtWidgets.QMessageBox(self)
-        box.setWindowTitle("Desktop Cat")
+        box.setWindowTitle("Desktop Pet")
         box.setText(question)
         box.setStyleSheet(settings_qss())
         box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.Cancel)
@@ -5968,7 +5968,7 @@ def write_icns(path: Path) -> None:
 
 
 def install_shortcuts() -> list[str]:
-    """Create the 'Desktop Cat' launcher(s) with the cat icon; returns what was created."""
+    """Create the 'Desktop Pet' launcher(s) with the pet icon; returns what was created."""
     if sys.platform == "win32":
         return _install_windows_shortcuts()
     if sys.platform == "darwin":
@@ -5993,10 +5993,14 @@ def _install_windows_shortcuts() -> list[str]:
     ps = (
         "$s = New-Object -ComObject WScript.Shell; "
         "foreach ($d in @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'))) { "
-        "$path = Join-Path $d 'Desktop Cat.lnk'; $l = $s.CreateShortcut($path); "
+        # The app used to be called Desktop Cat: remove that shortcut, but only if it is ours.
+        "$old = Join-Path $d 'Desktop Cat.lnk'; "
+        "if (Test-Path -LiteralPath $old) { if ($s.CreateShortcut($old).Arguments -like '*desktop_cat.py*') "
+        "{ Remove-Item -LiteralPath $old } }; "
+        "$path = Join-Path $d 'Desktop Pet.lnk'; $l = $s.CreateShortcut($path); "
         f"$l.TargetPath = {q(target)}; $l.Arguments = {q(chr(34) + str(script) + chr(34))}; "
         f"$l.WorkingDirectory = {q(script.parent)}; $l.IconLocation = {q(str(icon) + ',0')}; "
-        "$l.Description = 'Desktop Cat: break reminders, file fetching and Cobra mode'; $l.Save(); $path }"
+        "$l.Description = 'Desktop Pet: break reminders, file fetching and Cobra mode'; $l.Save(); $path }"
     )
     result = subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True, check=True)
     return [line for line in result.stdout.splitlines() if line.strip()]
@@ -6015,8 +6019,8 @@ def build_mac_app(app: Path, python: str, script: str) -> None:
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleName</key><string>Desktop Cat</string>
-    <key>CFBundleDisplayName</key><string>Desktop Cat</string>
+    <key>CFBundleName</key><string>Desktop Pet</string>
+    <key>CFBundleDisplayName</key><string>Desktop Pet</string>
     <key>CFBundleIdentifier</key><string>local.desktopcat.app</string>
     <key>CFBundleExecutable</key><string>DesktopCat</string>
     <key>CFBundleIconFile</key><string>desktop_cat</string>
@@ -6029,7 +6033,11 @@ def build_mac_app(app: Path, python: str, script: str) -> None:
 
 
 def _install_mac_app() -> list[str]:
-    app = Path.home() / "Desktop" / "Desktop Cat.app"
+    old = Path.home() / "Desktop" / "Desktop Cat.app"  # the app's earlier name; removed only if we built it
+    if (old / "Contents" / "MacOS" / "DesktopCat").exists():
+        import shutil
+        shutil.rmtree(old, ignore_errors=True)
+    app = Path.home() / "Desktop" / "Desktop Pet.app"
     build_mac_app(app, sys.executable, str(Path(__file__).resolve()))
     subprocess.run(["touch", str(app)], check=False)  # makes Finder pick up the new icon
     return [str(app)]
@@ -6039,7 +6047,7 @@ def _install_mac_app() -> list[str]:
 # Entry point
 # =================================================================================
 def parse_args(argv: list[str]) -> tuple[Config, argparse.Namespace]:
-    parser = argparse.ArgumentParser(description="Desktop cat: break reminders, file fetching and Cobra mode.")
+    parser = argparse.ArgumentParser(description="Desktop Pet: break reminders, file fetching and Cobra mode.")
     parser.add_argument("--demo", action="store_true", help="fast timers for testing (30 s alert, 20 s idle)")
     parser.add_argument("--alert-minutes", type=float, help="continuous activity before the alert (default 120)")
     parser.add_argument("--idle-minutes", type=float, help="inactivity that counts as away (default 5)")
@@ -6051,7 +6059,7 @@ def parse_args(argv: list[str]) -> tuple[Config, argparse.Namespace]:
     parser.add_argument("--lunch", metavar="HH:MM", help="lunch reminder time, 24 h (default 13:00)")
     parser.add_argument("--home", metavar="HH:MM", help="go-home reminder time, 24 h (default 17:45)")
     parser.add_argument("--install-shortcut", action="store_true",
-                        help="create the Desktop Cat launcher with its icon (Windows: Desktop + Start menu; macOS: Desktop app)")
+                        help="create the Desktop Pet launcher with its icon (Windows: Desktop + Start menu; macOS: Desktop app)")
     args = parser.parse_args(argv)
 
     cfg = Config.demo() if args.demo else Config()
@@ -6089,7 +6097,7 @@ def main() -> int:
         for path in install_shortcuts():
             print("Created", path)
         if sys.platform == "win32":
-            print("To pin it: right-click the Desktop Cat shortcut > Show more options > Pin to taskbar.")
+            print("To pin it: right-click the Desktop Pet shortcut > Show more options > Pin to taskbar.")
         return 0
     if notify_running_instance():
         return 0  # already running: the existing cat says hello instead

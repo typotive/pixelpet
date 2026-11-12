@@ -1,21 +1,21 @@
-DESKTOP CAT - ONE-CLICK INSTALL
+DESKTOP PET - ONE-CLICK INSTALL
 ===============================
 
-Keep this "install" folder inside the Desktop Cat folder. If you downloaded a ZIP,
-unzip it first. Don't move or delete the Desktop Cat folder afterwards, because the
+Keep this "install" folder inside the Desktop Pet folder. If you downloaded a ZIP,
+unzip it first. Don't move or delete the Desktop Pet folder afterwards, because the
 shortcut runs the app from there. If you do move it, run the installer again.
 
 
 WINDOWS
 -------
-Double-click:  Install Desktop Cat (Windows).bat
+Double-click:  Install Desktop Pet (Windows).bat
 
 If Windows shows "Windows protected your PC", click More info > Run anyway.
 
 
 MAC
 ---
-Double-click:  Install Desktop Cat (Mac).command
+Double-click:  Install Desktop Pet (Mac).command
 
 The first time, macOS may refuse to open a downloaded file. If it does:
   Right-click (or Control-click) the file > Open > Open.
@@ -32,14 +32,14 @@ WHAT IT DOES
 2. Creates a private Python environment, so nothing else on your computer changes:
      Windows:  %LOCALAPPDATA%\DesktopCat\venv
      Mac:      ~/Library/Application Support/DesktopCat/venv
-3. Installs the packages Desktop Cat needs (needs internet, about 100 MB).
-4. Creates a "Desktop Cat" icon on your Desktop and starts the cat.
+3. Installs the packages Desktop Pet needs (needs internet, about 100 MB).
+4. Creates a "Desktop Pet" icon on your Desktop and starts the pet.
 
 Running it again is safe. It updates the packages and recreates the shortcut.
 
 
 UNINSTALL
 ---------
-Quit the cat (right-click it > Quit), delete the Desktop icon, delete the DesktopCat
-folder listed above, and delete the Desktop Cat folder.
-On Windows, also remove "Desktop Cat" from the Start menu.
+Quit the pet (right-click it > Quit), delete the Desktop icon, delete the DesktopCat
+folder listed above, and delete the Desktop Pet folder.
+On Windows, also remove "Desktop Pet" from the Start menu.

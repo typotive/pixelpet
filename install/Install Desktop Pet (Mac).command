@@ -1,6 +1,6 @@
 #!/bin/bash
-# One-click installer: Python packages in a private environment, a Desktop Cat app on the
-# Desktop with the cat icon, then starts the cat. Safe to run again at any time.
+# One-click installer: Python packages in a private environment, a Desktop Pet app on the
+# Desktop with the pet icon, then starts the pet. Safe to run again at any time.
 
 fail() {
     echo
@@ -10,8 +10,8 @@ fail() {
     exit 1
 }
 
-cd "$(dirname "$0")/.." || fail "Could not open the Desktop Cat folder."
-[ -f desktop_cat.py ] || fail "desktop_cat.py was not found. Keep this install folder inside the Desktop Cat folder."
+cd "$(dirname "$0")/.." || fail "Could not open the Desktop Pet folder."
+[ -f desktop_cat.py ] || fail "desktop_cat.py was not found. Keep this install folder inside the Desktop Pet folder."
 
 DATA_DIR="$HOME/Library/Application Support/DesktopCat"
 VENV="$DATA_DIR/venv"
@@ -31,7 +31,7 @@ find_python() {
 }
 
 echo
-echo "  Installing Desktop Cat"
+echo "  Installing Desktop Pet"
 echo "  ======================"
 echo
 
@@ -59,13 +59,13 @@ echo "[3/4] Installing required packages (this can take a minute)..."
 "$VENV/bin/python" -m pip install --quiet --disable-pip-version-check -r requirements.txt \
     || fail "Could not install the packages. Check your internet connection and run this file again."
 
-echo "[4/4] Creating the Desktop app and starting the cat..."
+echo "[4/4] Creating the Desktop app and starting the pet..."
 "$VENV/bin/python" desktop_cat.py --install-shortcut || fail "Could not create the Desktop app."
-open "$HOME/Desktop/Desktop Cat.app" || fail "Could not start the app."
+open "$HOME/Desktop/Desktop Pet.app" || fail "Could not start the app."
 
 echo
-echo "  Done! Look for the cat above your Dock."
-echo "  Next time, open \"Desktop Cat\" on your Desktop."
+echo "  Done! Look for your pet above your Dock."
+echo "  Next time, open \"Desktop Pet\" on your Desktop."
 echo
 sleep 5
 osascript -e 'tell application "Terminal" to close front window' >/dev/null 2>&1 &
