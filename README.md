@@ -17,7 +17,8 @@ Single Python file · PyQt6 · no build step · 100% local processing.
 | 🚶 **Get up and walk** | After **40 min** of continuous active screen time (a 5-min idle break resets it) |
 | 💧 **Hydration prompt** | Every **30 min** of active screen time |
 | 🍱 **Lunch break** | **1:00 PM**, once per day |
-| 🏠 **End of workday** | **5:45 PM**, once per day |
+| 🏠 **End of workday** | **5:45 PM**, once per day, followed by a summary of your day |
+| 👀 **Eye break** | Every **20 min**: look at something about 6 m (20 ft) away for 20 seconds |
 
 Idle detection tracks hardware input activity so genuine time away from your desk counts as rest. Notifications never pile up, and routine prompts include a "10 more min" snooze option.
 
@@ -35,6 +36,17 @@ Double-click the cat → **Fetch a file**, and begin typing. The utility maintai
 - **Files:** Press `Enter` or click to animate the cat retrieving the item and opening its parent folder with the target pre-selected.
 - **Search syntax:** `words` (AND logic) · `!exclude` · `"exact phrase"` · `ext:pdf;docx` · `file:` · `folder:` · `app:` · `*wild?cards` · `docs\report` (path matching)
 - **Keyboard shortcuts:** `Enter` launch/locate · `Shift+Enter` copy path · `Ctrl+Enter` open directly · `↑ / ↓` navigate · `Esc` dismiss · drag results directly into external apps
+- **Answers:** type a sum (`12*7`, `15% of 80`, `sqrt(2)`) or a conversion (`5 km in miles`, `100 f to c`, `1 gb in mib`) and the answer appears on top. `Enter` copies it.
+- **Pinned and recent:** an empty search box shows your pinned items and the last things you fetched. Right-click any result to pin it, or for *Open with…*.
+
+### 🍅 Focus, Notes & Shortcuts
+- **Focus timer:** 25 minutes of quiet (no reminders or chatter), then a 5-minute break. The countdown floats above your pet. Both lengths are adjustable.
+- **Quick notes:** type `buy milk` to keep a note, or `call bank at 4pm` / `tea in 20 min` / `dentist tomorrow at 9:30am` to get a reminder at that time.
+- **Clipboard history:** your last 25 copied texts, searchable. Kept only until you quit, never written to disk, and anything a password manager marks as private is skipped.
+- **Screenshot helper:** opens the system's area-snip tool, then offers to save the result to Pictures.
+- **Shortcuts that work anywhere (Windows):** `Ctrl+Alt+Space` Fetch (or `Ctrl+Alt+F` if another app already uses Space) · `Ctrl+Alt+V` clipboard history · `Ctrl+Alt+N` notes.
+- **Quiet mode:** while a full-screen app, game or presentation runs, your pet hides and saves its reminders for later.
+- **Stats:** today's screen time, breaks, water and focus sessions, plus a 7-day chart in **Settings → Stats**.
 
 ### 🐍 Storage Cleanup Mode
 Double-click → **Cobra mode**. Inspect storage usage before performing any action (viewing Recycle Bin usage and old cache files); **no items are removed without explicit confirmation**. During cleanup, an interactive pixel battle animation plays until completion.
@@ -54,6 +66,14 @@ Safety boundaries:
 
 ### 🐾 Choose Your Pet
 Double-click → **Settings** to pick a **tabby cat, golden retriever, hamster, bunny, penguin or caped hero**, and set its size from Tiny to Huge. Each pet has its own sounds and small talk. The caped hero also shows off now and then: it fires a grapple line, zips to the top of the screen, flies across and dives back down.
+
+- **Colours:** eleven fur (or suit) colours per pet.
+- **A second pet** that wanders alongside, and says hello when the two meet.
+- **Mood:** your pet gets happier when you take breaks, drink water and finish reminders, and a little sad if you keep snoozing. Hearts mean it's pleased.
+- **Play:** throw a ball and it fetches it, or give it a treat.
+- **Seasonal hats:** a woolly hat in winter, a night cap late in the evening, and a party hat on your birthday.
+- **Window tops (Windows):** now and then it hops onto the window you're using and walks along its top edge.
+- **Light or dark glass,** and an optional short sound per pet for reminders.
 
 <p align="center">
   <img src="docs/screenshots/settings_pet.png" width="380" alt="Choosing a pet and its size">
@@ -80,7 +100,10 @@ The installer sets up Python if needed, installs the required packages in a priv
 | File search | ✅ Fixed drives, updated live | ✅ Home folder, refreshed hourly |
 | App search | ✅ | ✅ |
 | Storage cleanup | ✅ | ❌ Finds nothing to clean; not available yet |
-| Dialogue styling | Frosted glass | Plain dark tint |
+| Focus, notes, answers, clipboard history, stats, play | ✅ | ✅ |
+| Shortcuts that work anywhere, quiet mode, window tops | ✅ | ❌ Not available yet |
+| Screenshot helper | ✅ System snip tool | ✅ System screenshot tool |
+| Dialogue styling | Frosted glass, dark or light | Plain dark or light tint |
 
 macOS support has not yet been tested on a real Mac. Please open an issue if something misbehaves.
 
@@ -114,12 +137,13 @@ python desktop_cat.py --demo
 | Action | Response |
 |---|---|
 | Single Click | Display status (current desk duration, next break) or dismiss prompt |
-| Double Click | Open action menu (**Fetch a file**, **Cleanup mode** or **Settings**) |
-| Right Click | Context menu (Status, Fetch, Cleanup, Timer Reset, Animation Previews, Settings, Reindex, Quit) |
+| Single Click (during focus) | Time left, or stop the focus timer |
+| Double Click | Open action menu (**Fetch**, **Focus**, **Note**, **Play**, **Screenshot**, **Cleanup mode**, **Settings**) |
+| Right Click | Context menu (Status, Fetch, Clipboard, Notes, Focus, Screenshot, Play, Today's summary, Cleanup, Timer Reset, Animation Previews, Settings, Reindex, Quit) |
 | Click & Drag | Reposition companion across displays |
 
 ## Configuration
-Pet, size, sitting limit and routines are set in the **Settings** window and saved in `settings.json`. Everything else can be defined within the `Config` dataclass in `desktop_cat.py`. The flags below override the saved settings for one run, and nothing is saved during that run:
+Pet, size, colours, sitting limit, routines, focus lengths, theme, sounds and shortcuts are set in the **Settings** window and saved in `settings.json`. Everything else can be defined within the `Config` dataclass in `desktop_cat.py`. The flags below override the saved settings for one run, and nothing is saved during that run:
 
 | Parameter | Default | Command Line Argument |
 |---|---|---|
@@ -133,7 +157,7 @@ Pet, size, sitting limit and routines are set in the **Settings** window and sav
 | `cobra_min_age_h` | 24 hours | Age cutoff for temporary file cleanup |
 
 ## Data & Privacy
-All computation occurs locally on your machine. No telemetry, usage statistics, or personal data are collected or transmitted over the network. The local search index and your settings are stored exclusively within `%LOCALAPPDATA%\DesktopCat\` (macOS: `~/Library/Application Support/DesktopCat/`) and can be purged at any time.
+All computation occurs locally on your machine. No telemetry or personal data is collected or transmitted over the network. The local search index, your settings, notes and daily screen-time stats are stored exclusively within `%LOCALAPPDATA%\DesktopCat\` (macOS: `~/Library/Application Support/DesktopCat/`) and can be purged at any time. Clipboard history is kept in memory only and is gone when you quit.
 
 ## Project Structure
 ```
